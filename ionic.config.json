@@ -1,0 +1,7 @@
+{
+  "name": "Appli4G",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
