@@ -84,8 +84,8 @@
           <div class="card" *ngFor="let item of urgenceN">
             <div class="ion-text-center">{{item.nom}}</div>
             <div class="nums">
-              <div class="num">{{item.num1}}</div>
-              <div class="num">{{item.num2}}</div>
+              <div class="num" (click)="callClick(item.num1)"> <ion-icon name="call"></ion-icon> {{item.num1}}</div>
+              <div class="num" (click)="callClick(item.num2)"><ion-icon name="call"></ion-icon> {{item.num2}}</div>
             </div>
           </div>
         </div>
@@ -103,26 +103,33 @@
             </div>
           </div>
           <div class="ion-text-center">{{today}}</div>
-          <div class="details">
-            <div class="img">
-              <img [src]="'https://openweathermap.org/img/wn/'+weather[0]?.weather[0]?.icon+'@2x.png'" alt="">
+          <div *ngIf="weather.length > 0">
+            <div class="details">
+              <div class="img">
+                <img [src]="'https://openweathermap.org/img/wn/'+weather[0]?.weather[0]?.icon+'@2x.png'" alt="">
+              </div>
+              <div class="txt">
+                {{(weather[0]?.temp?.day - 273.15).toFixed(1)}}˚ <br> <span class="desc">{{weather[0]?.weather[0]?.description}}</span>
+              </div>
             </div>
-            <div class="txt">
-              {{(weather[0]?.temp?.day - 273.15).toFixed(1)}}˚ <br> <span class="desc">{{weather[0]?.weather[0]?.description}}</span>
+            <div class="plus">
+              <div class="it ion-text-center">
+                <ion-icon name="wind"></ion-icon> <br> vitesse du vend <br> {{weather[0]?.wind_speed}} m/s
+              </div>
+              <div class="it ion-text-center">
+                <ion-icon name="humide"></ion-icon> <br> Humidité <br> {{weather[0]?.humidity}}%
+              </div>
+              <div class="it ion-text-center">
+                <ion-icon name="sunset"></ion-icon> <br> Couché du soleil <br> {{sunset}}
+              </div>
             </div>
           </div>
-          <div class="plus">
-            <div class="it ion-text-center">
-              <ion-icon name="wind"></ion-icon> <br> vitesse du vend <br> {{weather[0]?.wind_speed}} m/s
-            </div>
-            <div class="it ion-text-center">
-              <ion-icon name="humide"></ion-icon> <br> Humidité <br> {{weather[0]?.humidity}}%
-            </div>
-            <div class="it ion-text-center">
-              <ion-icon name="sunset"></ion-icon> <br> Couché du soleil <br> {{sunset}}
-            </div>
+          <div class="center">
+            <div class="hypnotic" *ngIf="weather.length === 0"></div>
           </div>
         </div>
+
+
         <div class="list_ ion-margin-top">
           <div class="ion-item" *ngFor="let item of weather">
             <div class="date">{{item.dt}}</div>
@@ -141,11 +148,23 @@
 
   <ion-modal #speedTestModal>
   <ng-template>
-    <ion-content class="speed">
-      <div class="rond">
-        <div class="cr">
-          {{speed}} Mbps
+    <ion-content>
+      <div class="back" (click)="speedTestModal.isOpen = false">
+        <div class="cercle white flex-center">
+          <ion-icon name="chevron-back"></ion-icon>
         </div>
+      </div>
+      <div class="speed">
+        <div class="rond">
+          <div class="cr">
+            <span *ngIf="speed">{{speed}} Mbps</span>
+            <div class="progress" *ngIf="!speed"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bottom">
+        Votre vitesse de connexion a temps reel
       </div>
     </ion-content>
   </ng-template>

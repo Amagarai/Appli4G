@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Appli4G</string>
+    <string name="title_activity_main">Appli4G</string>
+    <string name="package_name">appli4g.co</string>
+    <string name="custom_url_scheme">appli4g.co</string>
+</resources>

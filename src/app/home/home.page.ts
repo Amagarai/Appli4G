@@ -59,7 +59,6 @@ export class HomePage implements OnInit{
           let numSpeed = speed;
           this.speed = numSpeed.toFixed(2)
 
-          console.log('Your speed is ' + this.speed);
           setTimeout(() => {
             this.test()
           }, 1000);
@@ -68,17 +67,6 @@ export class HomePage implements OnInit{
 
   }
 
-  checkSpeed(){
-    this.speedTestService.getMbps().subscribe(
-      (speed) => {
-        console.log('Your speed is ' + speed);
-      }
-    );
-    setTimeout(() => {
-      this.checkSpeed()
-
-    }, 1000);
-   }
 
    async printCurrentPosition() {
     const coordinates = await Geolocation.getCurrentPosition();
@@ -95,7 +83,6 @@ export class HomePage implements OnInit{
 
       });
 
-      console.log(this.weather);
     })
   };
 
@@ -115,7 +102,7 @@ export class HomePage implements OnInit{
     } else {
       this.image= '../../assets/terre.png'
       this.txt='Oops pas de connexion internet'
-      this.noNet.isOpen = true;
+      // this.noNet.isOpen = true;
     }
 
     Network.addListener('networkStatusChange', status => {
@@ -131,6 +118,10 @@ export class HomePage implements OnInit{
         this.noNet.isOpen = true;
       }
     });
+  }
+
+  callClick(num: any){
+    window.location.href = "tel:+223"+num;
   }
 }
 
