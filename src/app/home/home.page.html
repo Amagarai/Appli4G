@@ -124,8 +124,14 @@
               </div>
             </div>
           </div>
-          <div class="center">
-            <div class="hypnotic" *ngIf="weather.length === 0"></div>
+          <div *ngIf="weather.length === 0">
+            <div class="center">
+              <div class="hypnotic"></div>
+            </div>
+            <div class="center ion-margin-top">
+              <ion-button class="ion-margin-top" color="light" (click)="printCurrentPosition()">Recharcger</ion-button>
+            </div>
+
           </div>
         </div>
 

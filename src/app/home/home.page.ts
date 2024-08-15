@@ -28,6 +28,7 @@ export class HomePage implements OnInit{
   today: any
   urgenceN = num
   speed: any
+
   constructor(private http: HttpClient , private speedTestService:SpeedTestService) {
     addIcons({
       filter,
@@ -47,6 +48,7 @@ export class HomePage implements OnInit{
 
   ngOnInit(): void {
     this.cheickNetwork()
+    // this.startBackgroundGeolocation()
     this.printCurrentPosition()
     // this.checkSpeed()
     this.test()
@@ -67,12 +69,21 @@ export class HomePage implements OnInit{
 
   }
 
-
    async printCurrentPosition() {
-    const coordinates = await Geolocation.getCurrentPosition();
+    let coordinates: any
+    const coordinate = await Geolocation.getCurrentPosition().then((res)=>{
+      console.log(res);
+      coordinates = res
+    }, (error =>{
+      console.log(error);
+
+    }));
+
     let fr_ = 'fr'
     this.http.get(`https://api.openweathermap.org/data/3.0/onecall?lat=${coordinates.coords.latitude}&lon=${coordinates.coords.longitude}&appid=${this.apiKey}&lang=${fr_}`).subscribe((res : any) =>{
       this.weather = res.daily
+      console.log(this.weather);
+
       this.sunset = this.getSunsetTime(this.weather[0].sunset)
       let date_ = new Date((this.weather[0].dt * 1000))
       this.today = format(new Date(date_), 'EEEE d MMMM yyyy', { locale: fr });
